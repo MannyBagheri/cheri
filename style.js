@@ -4,12 +4,27 @@ export const MARGIN = 10;
 
 export const palette = {
     background: '#fafbf6',
-    border: '#565a75',
-    text: '#0f0f1b'
+    border: '#ff014a',
+    text: '#535252'
 };
 
 export default StyleSheet.create({
     app: {
+        backgroundColor: palette.background,
+        flex: 1
+    },
+    header: {
+        fontSize: 24,
+        fontFamily: 'Bungee-Regular',
+        color: palette.text,
+        textAlign: 'center'
+    },
+    list: {
+        marginTop: 4,
+        borderTopWidth: 4,
+        borderBottomWidth: 4,
+        marginBottom: 4,
+        borderColor: palette.border,
         backgroundColor: palette.background,
         flex: 1
     },
@@ -26,7 +41,8 @@ export default StyleSheet.create({
     },
     listItemText: {
         fontSize: 24,
-        color: palette.text
+        color: palette.text,
+        fontFamily: 'Bungee-Regular'
     },
     inputText: {
         margin: MARGIN,
@@ -35,7 +51,8 @@ export default StyleSheet.create({
         borderColor: palette.border,
         padding: 10,
         fontSize: 24,
-        color: palette.text
+        color: palette.text,
+        fontFamily: 'Bungee-Regular'
     },
     button: {
         margin: MARGIN
