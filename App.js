@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Button, TextInput } from 'react-native';
 
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import ListItem from './components/ListItem.js';
 
 import style from './style.js';
@@ -36,7 +38,7 @@ function App() {
         setNewItemText(text);
     }
 
-    return (<View style={style.app}>
+    return (<SafeAreaView style={style.app}>
         <StatusBar style="auto" />
         <ListItem items={listItems} deleteItemCallback={removeItemFromList}></ListItem>
         <TextInput style={style.inputText} value={newItemText} onChangeText={onTextChanged}></TextInput>
@@ -46,7 +48,7 @@ function App() {
         <View style={style.button} >
             <Button title='CLEAR LIST' onPress={clearList}></Button>
         </View>
-    </View>);
+    </SafeAreaView>);
 }
 
 export default App;
