@@ -33,6 +33,7 @@ function App() {
 
     let [nextID, setNextID] = useState(1);
     let [listItems, setListItems] = useState([]);
+	let [selectedItem, setSelectedItem] = useState(); // New variable to track which item to delete
 
     let clearList = () => setListItems([]);
 
@@ -69,6 +70,13 @@ function App() {
             ]
         );
 
+    const promptDeleteItem = (idToRemove) => {
+        let item = listItems.find(i => i.id === idToRemove);
+        if (!item) return;
+        setSelectedItem(item);
+        openModal();
+    }    
+
     // Modal State
     const [modalVisible, setModalVisible] = useState(false);
     const openModal = () => setModalVisible(true);
@@ -77,14 +85,23 @@ function App() {
     return (<SafeAreaView style={style.app}>
         <StatusBar style="auto" />
         <Pressable onPress={openModal}>
-            <Text style={style.header}>Manny Bagheri LAB 2</Text>
+            <Text style={style.header}>Manny Bagheri LAB 3</Text>
         </Pressable>
-        <ListItem items={listItems} deleteItemCallback={removeItemFromList}></ListItem>
+        <ListItem items={listItems} deleteItemCallback={promptDeleteItem}></ListItem>
         <TextInput style={style.inputText} value={newItemText} onChangeText={onTextChanged}></TextInput>
         <Button text='ADD ITEM' onPress={addItemToList}></Button>
         <Button text='CLEAR LIST' onPress={confirmDeleteAll}></Button>
         <Modal visible={modalVisible} onRequestClose={closeModal}
-            content={<DeleteItem yes={closeModal} no={closeModal}/>}
+            content={
+                <DeleteItem
+					itemText={selectedItem?.text}
+                    yes={() => {
+                        removeItemFromList(selectedItem?.id);
+                        closeModal();
+                    }}
+                    no={closeModal}
+                />
+            }
         ></Modal>
     </SafeAreaView>);
 }
