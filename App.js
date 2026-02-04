@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, TextInput, Text } from 'react-native';
+import { TextInput, Text, Alert, Pressable } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ListItem from './components/ListItem.js';
 import Button from './components/Button.js';
+import Modal from './components/Modal.js';
+import DeleteItem from './components/prompts/DeleteItem.js';
 
 import style from './style.js';
 
@@ -57,13 +59,33 @@ function App() {
         setNewItemText(text);
     }
 
+    const confirmDeleteAll = () =>
+        Alert.alert(
+            'Delete All Items',
+            'Are you sure you want to delete all items?',
+            [
+                { text: 'Yes', onPress: clearList },
+                { text: 'No' }
+            ]
+        );
+
+    // Modal State
+    const [modalVisible, setModalVisible] = useState(false);
+    const openModal = () => setModalVisible(true);
+    const closeModal = () => setModalVisible(false);
+
     return (<SafeAreaView style={style.app}>
         <StatusBar style="auto" />
-        <Text style={style.header}>Manny Bagheri LAB 2</Text>
+        <Pressable onPress={openModal}>
+            <Text style={style.header}>Manny Bagheri LAB 2</Text>
+        </Pressable>
         <ListItem items={listItems} deleteItemCallback={removeItemFromList}></ListItem>
         <TextInput style={style.inputText} value={newItemText} onChangeText={onTextChanged}></TextInput>
         <Button text='ADD ITEM' onPress={addItemToList}></Button>
-        <Button text='CLEAR LIST' onPress={clearList}></Button>
+        <Button text='CLEAR LIST' onPress={confirmDeleteAll}></Button>
+        <Modal visible={modalVisible} onRequestClose={closeModal}
+            content={<DeleteItem yes={closeModal} no={closeModal}/>}
+        ></Modal>
     </SafeAreaView>);
 }
 
