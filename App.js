@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, Button, TextInput, Text } from 'react-native';
+import { View, TextInput, Text } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ListItem from './components/ListItem.js';
+import Button from './components/Button.js';
 
 import style from './style.js';
 
@@ -61,12 +62,8 @@ function App() {
         <Text style={style.header}>Manny Bagheri LAB 2</Text>
         <ListItem items={listItems} deleteItemCallback={removeItemFromList}></ListItem>
         <TextInput style={style.inputText} value={newItemText} onChangeText={onTextChanged}></TextInput>
-        <View style={style.button} >
-            <Button title='ADD ITEM' onPress={addItemToList}></Button>
-        </View>
-        <View style={style.button} >
-            <Button title='CLEAR LIST' onPress={clearList}></Button>
-        </View>
+        <Button text='ADD ITEM' onPress={addItemToList}></Button>
+        <Button text='CLEAR LIST' onPress={clearList}></Button>
     </SafeAreaView>);
 }
 

@@ -55,6 +55,30 @@ export default StyleSheet.create({
         fontFamily: 'Bungee-Regular'
     },
     button: {
-        margin: MARGIN
-    }
+        margin: MARGIN,
+        borderWidth: 1,
+        borderBottomWidth: 4,
+        borderRightWidth: 4,
+        borderRadius: 12,
+        borderColor: palette.border,
+        padding: 10,
+        alignItems: 'center',
+    },
+    buttonText: {
+        fontSize: 20,
+        fontFamily: 'Bungee-Regular',
+        color: palette.text,
+        textAlign: 'center'
+    },
+        buttonPressed: {
+        margin: MARGIN,
+        marginTop: MARGIN + 2,
+        borderWidth: 1,
+        borderBottomWidth: 2,
+        borderRightWidth: 2,
+        borderRadius: 12,
+        borderColor: palette.border,
+        padding: 10,
+        alignItems: 'center',
+    },
 });
