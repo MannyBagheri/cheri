@@ -74,18 +74,25 @@ function App() {
         let item = listItems.find(i => i.id === idToRemove);
         if (!item) return;
         setSelectedItem(item);
+        setModalContentKey('delete-item'); // New
         openModal();
     }    
 
+        const promptAppInfo = () => {
+        setModalContentKey('app-info');
+        openModal();
+    }
+
     // Modal State
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalContentKey, setModalContentKey] = useState();
     const openModal = () => setModalVisible(true);
     const closeModal = () => setModalVisible(false);
 
     return (<SafeAreaView style={style.app}>
         <StatusBar style="auto" />
-        <Pressable onPress={openModal}>
-            <Text style={style.header}>Manny Bagheri LAB 3</Text>
+        <Pressable onPress={promptAppInfo}>
+            <Text style={style.header}>Manny Bagheri LAB 4</Text>
         </Pressable>
         <ListItem items={listItems} deleteItemCallback={promptDeleteItem}></ListItem>
         <TextInput style={style.inputText} value={newItemText} onChangeText={onTextChanged}></TextInput>
@@ -93,14 +100,21 @@ function App() {
         <Button text='CLEAR LIST' onPress={confirmDeleteAll}></Button>
         <Modal visible={modalVisible} onRequestClose={closeModal}
             content={
-                <DeleteItem
-					itemText={selectedItem?.text}
-                    yes={() => {
-                        removeItemFromList(selectedItem?.id);
-                        closeModal();
-                    }}
-                    no={closeModal}
-                />
+                {
+                    'app-info': <Pressable onPress={closeModal}>
+                        <Text>APP INFO GOES HERE</Text>
+                    </Pressable>,
+
+                    'delete-item': <DeleteItem
+                        itemText={selectedItem?.text}
+                        yes={() => {
+                            removeItemFromList(selectedItem.id);
+                            closeModal();
+                        }}
+                        no={closeModal}
+                    />
+
+                }[modalContentKey]
             }
         ></Modal>
     </SafeAreaView>);
