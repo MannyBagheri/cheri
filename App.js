@@ -27,7 +27,7 @@ function App() {
     const APP_NAME = `Cheri`; //or Cherry
     const AUTHOR = 'Manny Bagheri'; 
     const APP_INFO = `${AUTHOR}
-    \nTitanOne-Regular\n
+    \n TitanOne \n
     #1f0510\n
     #7c183c\n
     #d53c6a`;
@@ -112,10 +112,10 @@ function App() {
         <Modal visible={modalVisible} onRequestClose={closeModal}
             content={
                 {
-                    'app-info': <Pressable onPress={closeModal}>
-                        <Text>APP INFO GOES HERE</Text>
-                    </Pressable>,
-
+                    'app-info':  <AppInfo 
+                        AppInformation={<Text>{APP_INFO}</Text>}
+                        Okay={closeModal}
+                    />,
 
                     'add-item': <AddItem
                         add={ text => addItemToList(text)}
