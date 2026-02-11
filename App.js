@@ -8,6 +8,7 @@ import ListItem from './components/ListItem.js';
 import Button from './components/Button.js';
 import Modal from './components/Modal.js';
 import DeleteItem from './components/prompts/DeleteItem.js';
+import AddItem from './components/prompts/AddItem.js';
 
 import style from './style.js';
 
@@ -37,12 +38,12 @@ function App() {
 
     let clearList = () => setListItems([]);
 
-    function addItemToList() {
-        if (newItemText === '') return;
-        let newItem = { text: newItemText, id: nextID };
+    function addItemToList(text) {
+        if (text === '') return;
+        let newItem = { text, id: nextID };
         setNextID(nextID + 1);
         setListItems([...listItems, newItem]);
-        setNewItemText('');
+        closeModal();
     }
 
     function removeItemFromList(idToRemove) {
@@ -53,11 +54,6 @@ function App() {
             }
         });
         setListItems(arrayWithRemovedItem);
-    }
-
-    let [newItemText, setNewItemText] = useState('');
-    function onTextChanged(text) {
-        setNewItemText(text);
     }
 
     const confirmDeleteAll = () =>
@@ -83,6 +79,12 @@ function App() {
         openModal();
     }
 
+    // Need the function to open the modal
+    const promptAddItem = () => {
+        setModalContentKey('add-item');
+        openModal();
+    }
+
     // Modal State
     const [modalVisible, setModalVisible] = useState(false);
     const [modalContentKey, setModalContentKey] = useState();
@@ -95,8 +97,7 @@ function App() {
             <Text style={style.header}>Manny Bagheri LAB 4</Text>
         </Pressable>
         <ListItem items={listItems} deleteItemCallback={promptDeleteItem}></ListItem>
-        <TextInput style={style.inputText} value={newItemText} onChangeText={onTextChanged}></TextInput>
-        <Button text='ADD ITEM' onPress={addItemToList}></Button>
+        <Button text='ADD ITEM' onPress={promptAddItem}></Button>
         <Button text='CLEAR LIST' onPress={confirmDeleteAll}></Button>
         <Modal visible={modalVisible} onRequestClose={closeModal}
             content={
@@ -105,6 +106,13 @@ function App() {
                         <Text>APP INFO GOES HERE</Text>
                     </Pressable>,
 
+
+                    'add-item': <AddItem
+                        add={ text => addItemToList(text)}
+                        cancel={closeModal}
+                    />,
+                    
+                    
                     'delete-item': <DeleteItem
                         itemText={selectedItem?.text}
                         yes={() => {
