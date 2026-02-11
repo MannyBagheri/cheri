@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { TextInput, Text, Alert, Pressable } from 'react-native';
+import { TextInput, Text, Alert, Pressable, View } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -9,6 +9,7 @@ import Button from './components/Button.js';
 import Modal from './components/Modal.js';
 import DeleteItem from './components/prompts/DeleteItem.js';
 import AddItem from './components/prompts/AddItem.js';
+import AppInfo from './components/prompts/AppInfo.js';
 
 import style from './style.js';
 
@@ -22,8 +23,17 @@ SplashScreen.preventAutoHideAsync();
 
 function App() {
 
+
+    const APP_NAME = `Cheri`; //or Cherry
+    const AUTHOR = 'Manny Bagheri'; 
+    const APP_INFO = `${AUTHOR}
+    \nTitanOne-Regular\n
+    #1f0510\n
+    #7c183c\n
+    #d53c6a`;
+    
     const [loaded, error] = useFonts({
-      'Bungee-Regular': require('./assets/fonts/Bungee-Regular.ttf'),
+      'Bungee-Regular': require('./assets/fonts/TitanOne-Regular.ttf'),
     });
     
     useEffect(() => {
@@ -94,7 +104,7 @@ function App() {
     return (<SafeAreaView style={style.app}>
         <StatusBar style="auto" />
         <Pressable onPress={promptAppInfo}>
-            <Text style={style.header}>Manny Bagheri LAB 4</Text>
+            <Text style={style.header}>{APP_NAME}</Text>
         </Pressable>
         <ListItem items={listItems} deleteItemCallback={promptDeleteItem}></ListItem>
         <Button text='ADD ITEM' onPress={promptAddItem}></Button>
