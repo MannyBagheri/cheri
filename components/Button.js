@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Pressable, Text } from 'react-native';
 
-import style from '../style.js';
+import Ionicons from '@expo/vector-icons/Ionicons';
+
+import style, { palette } from '../style.js';
 
 export default (props) => {
 
@@ -16,7 +18,13 @@ export default (props) => {
 
     return (
         <Pressable style={buttonStyle} onPress={props.onPress} onPressIn = {pressIn} onPressOut = {pressOut} >
-            <Text style={buttonTextStyle}>{props.text}</Text>
+            {
+                props?.icon
+                ?
+                <Ionicons name={props.icon.name} size={props.icon.size} color={palette.text}/>
+                : <Text style={buttonTextStyle}>{props.text}</Text>
+            }
+            
         </Pressable>
     );
 }

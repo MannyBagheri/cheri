@@ -17,8 +17,8 @@ export default (props) => {
                 For adding, onPress needs to have something to add, and that is "text"
                 as the child, it doesn't know what the 'text' contains, it just hopes its a function.
                 The 'add()' has been defined in App.js between the line 116 to 119*/}
-                <Button text='Add' style={{ flex: 1 }} onPress={() => props.add(text)}></Button>
-                <Button text='Cancel' style={{ flex: 1 }} onPress={props.cancel}></Button>
+                <Button text='Cancel' onPress={props.cancel} icon={{ name: "close", size: 32 }} style={{ flex: 1 }}></Button>
+			    <Button text='Add' onPress={() => props.add(text)} icon={{ name: "checkmark", size: 32 }} style={{ flex: 2 }} ></Button>
             </View>
         </View>
     );
