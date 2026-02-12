@@ -1,4 +1,5 @@
 import { View, Text, FlatList, Pressable } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import style from '../style.js';
 import Button from './Button.js';
@@ -17,11 +18,18 @@ export default (props) => {
                 </Text>
             </Pressable>
 
-            <Button
-                icon={{ name: 'close-circle', size: 22, }}
+            {/* <Button
+                icon={{ name: 'close', size: 22, }}
                 onPress={() => props.deleteItemCallback(item.id)}
                 style={{ margin: 0 }}
-            />
+            /> */}
+
+            <Pressable
+                onPress={() => props.deleteItemCallback(item.id)}
+                style={{ padding: 4 }}
+            >
+                <Ionicons name="close" size={30} color= "#d53c6a"/>
+            </Pressable>
         </View>);
     };
 

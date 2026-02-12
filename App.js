@@ -133,7 +133,7 @@ function App() {
             <Text style={style.header}>{APP_NAME}</Text>
         </Pressable>
         {/* <ListItem items={listItems} deleteItemCallback={promptDeleteItem}></ListItem> */}
-        <ListItem items={listItems} deleteItemCallback={promptDeleteItem} editItemCallback={promptEditItem}></ListItem>
+        <ListItem items={listItems} deleteItemCallback={promptDeleteItem} editItemCallback={promptEditItem}> </ListItem>
         <Button text='ADD ITEM' onPress={promptAddItem}></Button>
         <Button text='CLEAR LIST' onPress={confirmDeleteAll}></Button>
         <Modal visible={modalVisible} onRequestClose={closeModal}
