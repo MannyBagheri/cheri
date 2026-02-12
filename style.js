@@ -9,7 +9,7 @@ export const palette = {
     //    border: '#9dbe88'
 
     background: '#1f0510',
-    border: '#7c183c',
+    border: '#7c1831',
     text: '#d53c6a'
 
     // background: '#252446',

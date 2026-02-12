@@ -10,6 +10,7 @@ import Modal from './components/Modal.js';
 import DeleteItem from './components/prompts/DeleteItem.js';
 import AddItem from './components/prompts/AddItem.js';
 import AppInfo from './components/prompts/AppInfo.js';
+import EditItem from './components/prompts/EditItem.js';
 
 import style from './style.js';
 
@@ -22,7 +23,6 @@ import * as SplashScreen from 'expo-splash-screen';
 SplashScreen.preventAutoHideAsync();
 
 function App() {
-
 
     const APP_NAME = `Cheri`; //or Cherry
     const AUTHOR = 'Manny Bagheri'; 
@@ -66,6 +66,30 @@ function App() {
         setListItems(arrayWithRemovedItem);
     }
 
+    const promptEditItem = (idToEdit) => {
+        const item = listItems.find(i => i.id === idToEdit);
+        if (!item) return;
+
+        setSelectedItem(item);
+        setModalContentKey('edit-item');
+        openModal();
+    };
+
+
+    function replaceItemText(id, newText) {
+        if (newText === '') return;
+
+        setListItems(currentItems =>
+        currentItems.map(item =>
+            item.id === id
+                ? { ...item, text: newText }
+                : item
+        )
+    );
+
+
+}
+
     const confirmDeleteAll = () =>
         Alert.alert(
             'Delete All Items',
@@ -95,6 +119,8 @@ function App() {
         openModal();
     }
 
+    //
+
     // Modal State
     const [modalVisible, setModalVisible] = useState(false);
     const [modalContentKey, setModalContentKey] = useState();
@@ -106,7 +132,8 @@ function App() {
         <Pressable onPress={promptAppInfo}>
             <Text style={style.header}>{APP_NAME}</Text>
         </Pressable>
-        <ListItem items={listItems} deleteItemCallback={promptDeleteItem}></ListItem>
+        {/* <ListItem items={listItems} deleteItemCallback={promptDeleteItem}></ListItem> */}
+        <ListItem items={listItems} deleteItemCallback={promptDeleteItem} editItemCallback={promptEditItem}></ListItem>
         <Button text='ADD ITEM' onPress={promptAddItem}></Button>
         <Button text='CLEAR LIST' onPress={confirmDeleteAll}></Button>
         <Modal visible={modalVisible} onRequestClose={closeModal}
@@ -122,7 +149,6 @@ function App() {
                         cancel={closeModal}
                     />,
                     
-                    
                     'delete-item': <DeleteItem
                         itemText={selectedItem?.text}
                         yes={() => {
@@ -130,12 +156,21 @@ function App() {
                             closeModal();
                         }}
                         no={closeModal}
-                    />
+                    />,
+
+                   'edit-item': <EditItem
+                        oldText={selectedItem?.text}
+                        cancel={closeModal}
+                        confirm={(newText) => {
+                            replaceItemText(selectedItem.id, newText);
+                            closeModal();
+                    }}/>,
 
                 }[modalContentKey]
             }
         ></Modal>
     </SafeAreaView>);
-}
 
+}
 export default App;
+
