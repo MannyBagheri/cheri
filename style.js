@@ -4,17 +4,17 @@ export const MARGIN = 10;
 
 export const palette = {
 
-    //    background: '#232730',
-    //    text: '#eb6673',
-    //    border: '#9dbe88'
+    // background: '#232730',
+    // text: '#eb6673',
+    // border: '#9dbe88'
 
     background: '#1f0510',
     border: '#7c1831',
     text: '#d53c6a'
 
-    // background: '#252446',
-    // border: '#1e579c',
-    // text: '#0ce6f2'
+    //  background: '#252446',
+    //  border: '#1e579c',
+    //  text: '#0ce6f2'
 
     // background: '#333f58',
     // border: '#4a7a96',

@@ -19,6 +19,8 @@ import { useEffect } from 'react';
 
 import * as SplashScreen from 'expo-splash-screen'; 
 
+import * as storage from './util/storage.js';
+
 // Call before Component Function
 SplashScreen.preventAutoHideAsync();
 
@@ -31,7 +33,42 @@ function App() {
     #1f0510\n
     #7c183c\n
     #d53c6a`;
+    const SAVE_FILE_NAME = "save-data.json";
     
+
+    //Data Loading
+    const loadData = () => {
+    console.warn('Load starting...');
+    try {
+        let listItems = storage.loadData(SAVE_FILE_NAME);
+
+        if (listItems && Array.isArray(listItems)) {
+            console.warn(`Items Loaded: `, listItems);
+
+            setListItems(listItems);
+
+            //fixing ID issue            
+            let highestId = 0;
+            listItems.forEach(item => {
+                if( item?.id > highestId)
+                    highestId = item.id;
+            })
+
+            setNextID(highestId + 1);
+        }
+        console.warn('...................... loaded.');
+    }
+    catch (e) {
+		console.log(e);
+		console.warn('...................... failed.');
+        }
+    }
+
+    
+    useEffect(() => {
+        loadData();
+    }, []);
+
     const [loaded, error] = useFonts({
       'Bungee-Regular': require('./assets/fonts/TitanOne-Regular.ttf'),
     });
@@ -46,13 +83,24 @@ function App() {
     let [listItems, setListItems] = useState([]);
 	let [selectedItem, setSelectedItem] = useState(); // New variable to track which item to delete
 
-    let clearList = () => setListItems([]);
+    let clearList = () => {
+    setListItems([]);
 
-    function addItemToList(text) {
+    storage.saveData(SAVE_FILE_NAME, []);
+};
+
+    
+
+    const addItemToList = (text) => {
         if (text === '') return;
         let newItem = { text, id: nextID };
+        let updatedList = [...listItems, newItem];
         setNextID(nextID + 1);
-        setListItems([...listItems, newItem]);
+        setListItems(updatedList);
+
+      	// If we added a new item, we want to update the list
+        storage.saveData(SAVE_FILE_NAME, updatedList);
+      
         closeModal();
     }
 
@@ -64,6 +112,8 @@ function App() {
             }
         });
         setListItems(arrayWithRemovedItem);
+
+        storage.saveData(SAVE_FILE_NAME, arrayWithRemovedItem);
     }
 
     const promptEditItem = (idToEdit) => {
@@ -79,15 +129,15 @@ function App() {
     function replaceItemText(id, newText) {
         if (newText === '') return;
 
-        setListItems(currentItems =>
-        currentItems.map(item =>
+        let updatedList = listItems.map(item => 
             item.id === id
                 ? { ...item, text: newText }
                 : item
-        )
-    );
+        ) 
 
+        setListItems(updatedList);
 
+        storage.saveData(SAVE_FILE_NAME, updatedList);
 }
 
     const confirmDeleteAll = () =>
@@ -119,7 +169,6 @@ function App() {
         openModal();
     }
 
-    //
 
     // Modal State
     const [modalVisible, setModalVisible] = useState(false);

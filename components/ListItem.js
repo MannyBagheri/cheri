@@ -24,7 +24,7 @@ export default (props) => {
                 style={{ margin: 0 }}
             /> */}
 
-            <Pressable
+            <Pressable 
                 onPress={() => props.deleteItemCallback(item.id)}
                 style={{ padding: 4 }}
             >
