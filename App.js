@@ -29,7 +29,7 @@ function App() {
 
     const APP_NAME = `Cheri`; //or Cherry
     const AUTHOR = 'Manny Bagheri'; 
-    const APP_INFO = `Cheri is a daily list app that helps you stay organized!
+    const APP_INFO = `Cheri is a daily list app that helps you stay organized.
     
     It was inspired by Tom Ford’s Lost Cherry perfume, with the idea of helping the user not to lose track of things.`;
     const SAVE_FILE_NAME = "save-data.json";
