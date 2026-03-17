@@ -12,6 +12,24 @@ export const palette = {
     border: '#7c1831',
     text: '#d53c6a'
 
+    // background: '#1c2604',
+    // border: '#72521c',
+    // text: '#e4c380'
+
+    // background: '#ed809d',
+    // border: '#461312',
+    // text: '#c9c769'
+
+    // text: '#ed809d',
+    // border: '#461312',
+    // background: '#c9c769'
+
+    // background: '#282b2b',
+    // border: '#7aa6b3',
+    // text: '#ee6c29'
+
+
+
     //  background: '#252446',
     //  border: '#1e579c',
     //  text: '#0ce6f2'

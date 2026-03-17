@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { TextInput, Text, Alert, Pressable, View } from 'react-native';
+import { TextInput, Text, Pressable, View } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
 import ListItem from './components/ListItem.js';
 import Button from './components/Button.js';
@@ -11,6 +11,7 @@ import DeleteItem from './components/prompts/DeleteItem.js';
 import AddItem from './components/prompts/AddItem.js';
 import AppInfo from './components/prompts/AppInfo.js';
 import EditItem from './components/prompts/EditItem.js';
+import ClearList from './components/prompts/ClearList.js';
 
 import style from './style.js';
 
@@ -28,11 +29,9 @@ function App() {
 
     const APP_NAME = `Cheri`; //or Cherry
     const AUTHOR = 'Manny Bagheri'; 
-    const APP_INFO = `${AUTHOR}
-    \n TitanOne \n
-    #1f0510\n
-    #7c183c\n
-    #d53c6a`;
+    const APP_INFO = `Cheri is a daily list app that helps you stay organized!
+    
+    It was inspired by Tom Ford’s Lost Cherry perfume, with the idea of helping the user not to lose track of things.`;
     const SAVE_FILE_NAME = "save-data.json";
     
 
@@ -140,15 +139,10 @@ function App() {
         storage.saveData(SAVE_FILE_NAME, updatedList);
 }
 
-    const confirmDeleteAll = () =>
-        Alert.alert(
-            'Delete All Items',
-            'Are you sure you want to delete all items?',
-            [
-                { text: 'Yes', onPress: clearList },
-                { text: 'No' }
-            ]
-        );
+const confirmDeleteAll = () => {
+    setModalContentKey('clear-list');
+    openModal();
+};
 
     const promptDeleteItem = (idToRemove) => {
         let item = listItems.find(i => i.id === idToRemove);
@@ -176,7 +170,9 @@ function App() {
     const openModal = () => setModalVisible(true);
     const closeModal = () => setModalVisible(false);
 
-    return (<SafeAreaView style={style.app}>
+    return (
+        <SafeAreaProvider>
+    <SafeAreaView style={style.app}>
         <StatusBar style="auto" />
         <Pressable onPress={promptAppInfo}>
             <Text style={style.header}>{APP_NAME}</Text>
@@ -215,10 +211,21 @@ function App() {
                             closeModal();
                     }}/>,
 
+                    'clear-list': <ClearList
+                        yes={() => {
+                            clearList();
+                            closeModal();
+                        }}
+                        no={closeModal}
+                    />,
+
                 }[modalContentKey]
             }
         ></Modal>
-    </SafeAreaView>);
+    
+    </SafeAreaView>
+    </SafeAreaProvider>
+    );
 
 }
 export default App;
